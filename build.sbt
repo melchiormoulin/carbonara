@@ -30,3 +30,16 @@ lazy val commonSettings = Seq(
   // Tests
   fork in Test := true,
 )
+
+lazy val relay = (project in file("relay"))
+    .settings(
+        commonSettings,
+        mainClass in (Compile, run) := Some("carbonara.relay.Run")
+    )
+
+lazy val root = (project in file("."))
+    .settings(
+        commonSettings,
+        publishArtifact := false,
+    )
+    .aggregate(relay)
