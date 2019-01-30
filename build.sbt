@@ -31,15 +31,28 @@ lazy val commonSettings = Seq(
   fork in Test := true,
 )
 
+val versions = new {
+  val prometheus = "0.6.0"
+}
+
+lazy val prometheus = Seq(
+  libraryDependencies ++= Seq(
+    "simpleclient",
+    "simpleclient_hotspot", // JVM metrics
+    "simpleclient_httpserver" // HTTP server to expose metrics
+  ).map("io.prometheus" % _ % versions.prometheus)
+)
+
 lazy val relay = (project in file("relay"))
-    .settings(
-        commonSettings,
-        mainClass in (Compile, run) := Some("carbonara.relay.Run")
-    )
+  .settings(
+    commonSettings,
+    prometheus,
+    mainClass in(Compile, run) := Some("carbonara.relay.Run")
+  )
 
 lazy val root = (project in file("."))
-    .settings(
-        commonSettings,
-        publishArtifact := false,
-    )
-    .aggregate(relay)
+  .settings(
+    commonSettings,
+    publishArtifact := false,
+  )
+  .aggregate(relay)
