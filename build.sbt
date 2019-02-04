@@ -33,6 +33,7 @@ lazy val commonSettings = Seq(
 
 val versions = new {
   val prometheus = "0.6.0"
+  val scalatest = "3.0.5"
 }
 
 lazy val prometheus = Seq(
@@ -43,10 +44,21 @@ lazy val prometheus = Seq(
   ).map("io.prometheus" % _ % versions.prometheus)
 )
 
+lazy val testLibraries = Seq(
+  libraryDependencies ++= Seq(
+    "org.scalactic" %% "scalactic",
+    "org.scalatest" %% "scalatest"
+  ).map(_ % versions.scalatest % "test")
+)
+
 lazy val relay = (project in file("relay"))
   .settings(
     commonSettings,
     prometheus,
+    libraryDependencies ++= Seq(
+      "com.github.scopt" %% "scopt" % "4.0.0-RC2"
+    ),
+    testLibraries,
     mainClass in(Compile, run) := Some("carbonara.relay.Run")
   )
 
