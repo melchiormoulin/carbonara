@@ -1,0 +1,6 @@
+version: '3.1'
+services:
+  carbonara-relay:
+    image: "carbonara-relay"
+    ports:
+      - 7080:7080
