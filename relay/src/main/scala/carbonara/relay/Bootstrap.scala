@@ -10,17 +10,16 @@ case class CNContext(registry: CollectorRegistry)
 object Bootstrap {
 
   def run(args: Array[String]): CNContext = {
-    ArgumentParser.parse(args) orDie()
+    val arguments = ArgumentParser.parse(args) orDie()
 
     val registry = CollectorRegistry.defaultRegistry
-    configureMetrics(registry)
+    configureMetrics(registry, arguments.metricsPort)
 
     CNContext(registry)
   }
 
-  private def configureMetrics(registry: CollectorRegistry) = {
-    val socketAddress = new InetSocketAddress("0.0.0.0", 7080)
-    val server = new HTTPServer(socketAddress, registry, true)
+  private def configureMetrics(registry: CollectorRegistry, metricsPort: MetricsPort) = {
+    val server = new HTTPServer(new InetSocketAddress("0.0.0.0", metricsPort.value), registry, true)
     sys.addShutdownHook {
       server.stop()
     }
@@ -34,4 +33,5 @@ object Bootstrap {
       }
     }
   }
+
 }
