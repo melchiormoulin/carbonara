@@ -36,6 +36,13 @@ val versions = new {
   val scalatest = "3.0.5"
 }
 
+lazy val logging = Seq(
+  libraryDependencies ++= Seq(
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.9.2",
+    "ch.qos.logback" % "logback-classic" % "1.2.3"
+  )
+)
+
 lazy val prometheus = Seq(
   libraryDependencies ++= Seq(
     "simpleclient",
@@ -54,6 +61,7 @@ lazy val testLibraries = Seq(
 lazy val relay = (project in file("relay"))
   .settings(
     commonSettings,
+    logging,
     prometheus,
     libraryDependencies ++= Seq(
       "com.github.scopt" %% "scopt" % "4.0.0-RC2"
