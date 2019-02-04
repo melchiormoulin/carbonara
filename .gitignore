@@ -1,7 +1,6 @@
 # Scala
 *.class
 *.log
-
 # SBT
 dist/*
 target/
@@ -12,7 +11,8 @@ project/plugins/project/
 .history
 .cache
 .lib/
-
 # Fool-proof
 .travis/keys.tar
 .travis/*.gpg
+# Intellij
+.idea/
