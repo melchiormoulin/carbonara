@@ -1,4 +1,4 @@
-val VERSION = "0.0.1"
+val VERSION = "0.0.2-SNAPSHOT"
 
 lazy val commonSettings = Seq(
   organization := "com.criteo.carbonara",
