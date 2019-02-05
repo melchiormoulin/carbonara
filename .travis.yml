@@ -5,13 +5,13 @@ jdk:
 - oraclejdk8
 script:
 - sbt ++$TRAVIS_SCALA_VERSION test
-before_install:
-- openssl aes-256-cbc -K $encrypted_b1fa8a2faacf_key -iv $encrypted_b1fa8a2faacf_iv
-  -in .travis/keys.tar.enc -out .travis/keys.tar -d
-- tar xvf .travis/keys.tar
 env:
   global:
     secure: 36PLWee5ExAAGKDlINwgWFzzf5RQZ6o9ZGWblkcwSoPUIdOqZxy9AL7x0xDCI6fMKWDIuAYfz+A+pCFCroDQu6WECn/rOs4jEd6InVJIVscTfp6rjDt3CzyjVW9S3MqkWL83+KZoquSgIsojrdCn6UNFzHM+E+KWB8U6ofiiA2+q9O5LJkjoxYT4QBUAmeZT8+J1Vw3jkiSsGixe2zzd1DemnGO0mVaD25QX85X3A8r6B2Jp/1Dm0id9LPpuS1yIF8FhikztmRlREUmna2lZfif80vs/dAxxNgmwH/hIb/ucEcp6ZnqQjhnKYHmiIYZDElWM8nNXFoBhJCDZmK4vKncvf1am2pPltAsQG+CjetE2yEFY5e8tFaFU9Rk6EPdjAO+/Kb8MymRFGoPIS4KAqRumDOQKOyDD0ZbiTGT5wetk/xrlHVQAvUMKCpNSZeg98/Mjj9L33naRCyLXB0pSCLlHsXhrL5t73Ah9+9RLKTmufedB+Quo3S5Q71T2h/VRJmARYayHIK6/cfK2+WyvRcV78BnQzFAJRMvl/eLs6WdpvDxbNtvg6t7yZF3PX9GM3n/OXRnCII18LV2SFCjHvmfKEGA7C2Ge1NZnaqfWDnqDWvJicnfLQTHqBGK5FeJmX8wCV9DlIkpLagtajl0yxBkDUavv68itVhNH4NR8wY8=
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_b1fa8a2faacf_key -iv $encrypted_b1fa8a2faacf_iv
+  -in .travis/keys.tar.enc -out .travis/keys.tar -d
+- tar xvf .travis/keys.tar
 deploy:
   provider: script
   script: sbt +publishSigned "sonatypeReleaseAll com.criteo"
