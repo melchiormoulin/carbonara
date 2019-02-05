@@ -13,3 +13,6 @@ project/plugins/project/
 .cache
 .lib/
 
+# Fool-proof
+.travis/keys.tar
+.travis/*.gpg
