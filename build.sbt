@@ -29,6 +29,44 @@ lazy val commonSettings = Seq(
 
   // Tests
   fork in Test := true,
+
+  // Publishing
+  credentials += Credentials(
+    "Sonatype Nexus Repository Manager",
+    "oss.sonatype.org",
+    "criteo-oss",
+    sys.env.getOrElse("SONATYPE_PASSWORD", "")
+  ),
+  publishTo := Some(
+    if (isSnapshot.value) Opts.resolver.sonatypeSnapshots
+    else                  Opts.resolver.sonatypeStaging
+  ),
+  pgpPassphrase := sys.env.get("SONATYPE_PASSWORD").map(_.toArray),
+  pgpSecretRing := file(".travis/secring.gpg"),
+  pgpPublicRing := file(".travis/pubring.gpg"),
+  pomExtra in Global := {
+    <url>https://github.com/criteo/carbonara</url>
+    <licenses>
+      <license>
+        <name>Apache 2</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      </license>
+    </licenses>
+    <scm>
+      <connection>scm:git:github.com/criteo/carbonara.git</connection>
+      <developerConnection>scm:git:git@github.com:criteo/carbonara.git</developerConnection>
+      <url>github.com/criteo/carbonara</url>
+    </scm>
+    <developers>
+      <developer>
+        <name>Criteo SRE Observability team</name>
+        <email>sre-observability@criteo.com</email>
+        <url>https://github.com/criteo</url>
+        <organization>Criteo</organization>
+        <organizationUrl>http://www.criteo.com</organizationUrl>
+      </developer>
+    </developers>
+  }
 )
 
 val versions = new {
