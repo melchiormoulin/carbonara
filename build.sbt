@@ -41,9 +41,10 @@ lazy val commonSettings = Seq(
     if (isSnapshot.value) Opts.resolver.sonatypeSnapshots
     else                  Opts.resolver.sonatypeStaging
   ),
+  useGpg := false,
   pgpPassphrase := sys.env.get("SONATYPE_PASSWORD").map(_.toArray),
-  pgpSecretRing := file(".travis/secring.gpg"),
-  pgpPublicRing := file(".travis/pubring.gpg"),
+  pgpSecretRing := file((ThisBuild / baseDirectory).value + "/.travis/secring.gpg"),
+  pgpPublicRing := file((ThisBuild / baseDirectory).value + "/.travis/pubring.gpg"),
   pomExtra in Global := {
     <url>https://github.com/criteo/carbonara</url>
     <licenses>
