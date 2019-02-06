@@ -99,6 +99,7 @@ lazy val testLibraries = Seq(
 
 lazy val relay = (project in file("relay"))
   .settings(
+    name := "carbonara-relay",
     commonSettings,
     logging,
     prometheus,
