@@ -73,6 +73,7 @@ lazy val commonSettings = Seq(
 val versions = new {
   val prometheus = "0.6.0"
   val scalatest = "3.0.5"
+  val circe = "0.10.0"
 }
 
 lazy val logging = Seq(
@@ -104,8 +105,16 @@ lazy val relay = (project in file("relay"))
     logging,
     prometheus,
     libraryDependencies ++= Seq(
-      "com.github.scopt" %% "scopt" % "4.0.0-RC2"
+      "com.github.scopt" %% "scopt" % "4.0.0-RC2",
+      //For configuration
+      "org.apache.commons" % "commons-configuration2" % "2.4",
+      "commons-beanutils" % "commons-beanutils" % "1.9.3",
     ),
+    libraryDependencies ++= Seq(
+      "io.circe" %% "circe-core",
+      "io.circe" %% "circe-generic",
+      "io.circe" %% "circe-parser"
+    ).map(_ % versions.circe),
     testLibraries,
     mainClass in(Compile, run) := Some("carbonara.relay.Run")
   )
